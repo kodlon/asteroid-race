@@ -34,6 +34,12 @@ public class Player : MonoBehaviour
     private static bool gameActive = false;
     private static bool bonusActive = false;
 
+    public static bool BonusActive
+    {
+        get { return bonusActive; }
+        set { bonusActive = value; }
+    }
+
 
     public static bool GameActive
     {
@@ -146,16 +152,16 @@ public class Player : MonoBehaviour
                         bonusPanel.SetInteger("ChangeAnim", 1);
                         break;
                     case 1:
-                        StartCoroutine(GunBonusCoroutine());
+                        StartCoroutine(PlayerBonuses.GunBonusCoroutine(gunDrone, bonusPanel));
                         bonusPanel.SetInteger("ChangeAnim", 2);
                         break;
                     case 2:
-                        StartCoroutine(TimeBonusCoroutine());
+                        StartCoroutine(PlayerBonuses.TimeBonusCoroutine(bonusPanel));
                         bonusPanel.SetInteger("ChangeAnim", 3);
                         break;
                     case 3:
                         bonusPanel.SetInteger("ChangeAnim", 4);
-                        StartCoroutine(SizeBonusCoroutine());
+                        StartCoroutine(PlayerBonuses.SizeBonusCoroutine(bonusPanel, transform));
                         break;
                 }
 
@@ -172,48 +178,6 @@ public class Player : MonoBehaviour
     }
 
 
-    //TODO: move bonuses to another Script
-    private IEnumerator GunBonusCoroutine()
-    {
-        SpawnBullet.Active = true;
-        gunDrone.color = new Color(1f, 0.1686275f, 0.1686275f, 1.0f);
+    
 
-        yield return new WaitForSeconds(8);
-        bonusPanel.SetInteger("ChangeAnim", 7);
-        yield return new WaitForSeconds(2);
-
-        gunDrone.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
-        SpawnBullet.Active = false;
-        bonusActive = false;
-        bonusPanel.SetInteger("ChangeAnim", 0);
-    }
-
-    private IEnumerator TimeBonusCoroutine()
-    {
-        Time.timeScale = 0.5f;
-
-        yield return new WaitForSeconds(3);
-
-        bonusPanel.SetInteger("ChangeAnim", 5);
-        yield return new WaitForSeconds(2);
-        bonusPanel.speed = 1f;
-
-        Time.timeScale = 1.0f;
-        bonusActive = false;
-        bonusPanel.SetInteger("ChangeAnim", 0);
-
-    }
-
-    private IEnumerator SizeBonusCoroutine()
-    {
-        transform.localScale /= 1.5f;
-
-        yield return new WaitForSeconds(8);
-        bonusPanel.SetInteger("ChangeAnim", 6);
-        yield return new WaitForSeconds(2);
-
-        transform.localScale = Vector3.one;
-        bonusActive = false;
-        bonusPanel.SetInteger("ChangeAnim", 0);
-    }
 }
