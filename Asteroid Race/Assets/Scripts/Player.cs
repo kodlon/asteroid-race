@@ -118,17 +118,7 @@ public class Player : MonoBehaviour
 
             if (health == 0)
             {
-                if (score > PlayerPrefs.GetFloat("Score"))
-                    PlayerPrefs.SetFloat("Score", score);
-                score = 0.0f;
-                gameActive = false;
-                Time.timeScale = 1.0f;
-                SpawnBullet.Active = false;
-                transform.localScale = Vector3.one;
-                Ads.ADS();
-                bonusPanel.SetInteger("ChangeAnim", 0);
-
-                SceneManager.LoadScene("Main");
+                GameOver();
             }
 
             Destroy(other.transform.parent.gameObject);
@@ -178,6 +168,19 @@ public class Player : MonoBehaviour
     }
 
 
-    
+    private void GameOver()
+    {
+        if (score > PlayerPrefs.GetFloat("Score"))
+            PlayerPrefs.SetFloat("Score", score);
+        score = 0.0f;
+        gameActive = false;
+        Time.timeScale = 1.0f;
+        SpawnBullet.Active = false;
+        transform.localScale = Vector3.one;
+        bonusPanel.SetInteger("ChangeAnim", 0);
+
+        Ads.ADS();
+        SceneManager.LoadScene("Main");
+    }
 
 }
