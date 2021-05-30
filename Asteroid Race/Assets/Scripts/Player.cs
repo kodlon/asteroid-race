@@ -50,11 +50,9 @@ public class Player : MonoBehaviour
         {
             float verticalAxis = joystick.Vertical;
 
-
             engineSound.volume = 1;
             engineSound.pitch = (verticalAxis / 10) + 1;
 
-            //TODO: move change controll to start
             if (joystickActive.Active)
             {
                 MoveJoystick();

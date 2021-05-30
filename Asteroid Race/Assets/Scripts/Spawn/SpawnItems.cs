@@ -36,6 +36,6 @@ public class SpawnItems : MonoBehaviour
 
             timer = timerWait;
         }
-        timer += Time.deltaTime; //TODO: Objects spawn faster when player near top of screen
+        timer += Time.deltaTime; 
     }
 }

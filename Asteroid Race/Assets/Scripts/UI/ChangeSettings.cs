@@ -28,7 +28,7 @@ public class ChangeSettings : MonoBehaviour
         menuSound.Play();
         active = !active;
 
-        image.sprite = active ? on: off;
+        image.sprite = active ? on : off;
 
         PlayerPrefs.SetInt("ChangeSettings" + gameObject.name, Convert.ToInt32(active));
     }
