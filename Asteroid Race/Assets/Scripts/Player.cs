@@ -1,12 +1,15 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using TMPro;
+using System.Collections;
 
 public class Player : MonoBehaviour
 {
     [SerializeField] private bl_Joystick joystick;
     [SerializeField] private TMP_Text scoreText;
     [SerializeField] private SpriteRenderer playerSprite;
+    [SerializeField] private Image blackScreen;
     [SerializeField] private SpriteRenderer gunDrone;
     [SerializeField] private Animator bonusPanel;
     [SerializeField] private ChangeSettings joystickActive;
@@ -42,10 +45,8 @@ public class Player : MonoBehaviour
         get { return gameActive; }
         set { gameActive = value; }
     }
-
     private void Update()
     {
-
         if (gameActive)
         {
             float verticalAxis = joystick.Vertical;
@@ -112,7 +113,8 @@ public class Player : MonoBehaviour
 
             if (health == 0)
             {
-                GameOver();
+                StartCoroutine(GameOver());
+
             }
 
             Destroy(other.transform.parent.gameObject);
@@ -162,19 +164,34 @@ public class Player : MonoBehaviour
     }
 
 
-    private void GameOver()
+    private IEnumerator GameOver()
     {
         if (score > PlayerPrefs.GetFloat("Score"))
             PlayerPrefs.SetFloat("Score", score);
         score = 0.0f;
-        gameActive = false;
         Time.timeScale = 1.0f;
+        gameActive = false;
         SpawnBullet.Active = false;
         transform.localScale = Vector3.one;
         bonusPanel.SetInteger("ChangeAnim", 0);
 
+        yield return StartCoroutine(BlackScreen());
+
         Ads.ADS();
         SceneManager.LoadScene("Main");
+
+
+        yield return null;
+    }
+
+    private IEnumerator BlackScreen()
+    {
+        for (float i = 0.0f; i < 1.0f; i += 0.01f)
+        {
+            blackScreen.color = new Color(0f, 0f, 0f, i);
+
+            yield return new WaitForSeconds(0.0f);
+        }
     }
 
 }
