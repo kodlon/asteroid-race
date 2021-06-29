@@ -175,7 +175,7 @@ public class Player : MonoBehaviour
         transform.localScale = Vector3.one;
         bonusPanel.SetInteger("ChangeAnim", 0);
 
-        yield return StartCoroutine(BlackScreen());
+        //yield return StartCoroutine(BlackScreen());
 
         Ads.ADS();
         SceneManager.LoadScene("Main");

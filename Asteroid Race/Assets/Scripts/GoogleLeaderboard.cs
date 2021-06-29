@@ -1,41 +1,42 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.SocialPlatforms;
-using GooglePlayGames;
-using GooglePlayGames.BasicApi;
+// using System.Collections;
+// using System.Collections.Generic;
+// using UnityEngine;
+// using UnityEngine.SocialPlatforms;
+// using GooglePlayGames;
+// using GooglePlayGames.BasicApi;
 
-public class GoogleLeaderboard : MonoBehaviour
-{
-    private const string LEADER_BOARD = "CgkIh5ulyewBEAIQAA";
+// public class GoogleLeaderboard : MonoBehaviour
+// {
+//     private const string LEADER_BOARD = "CgkIh5ulyewBEAIQAA";
 
-    private void Start() {
-        PlayGamesPlatform.DebugLogEnabled = true;
-        PlayGamesPlatform.Activate();
-        Social.localUser.Authenticate(success => 
-        {
-            if (success)
-            {
+//     private void Start() {
+//         PlayGamesPlatform.DebugLogEnabled = true;
+//         PlayGamesPlatform.Activate();
+//         Social.localUser.Authenticate(success => 
+//         {
+//             if (success)
+//             {
                 
-            }
-            else
-            {
+//             }
+//             else
+//             {
+//         Debug.Log("GOOGLE LEADERBOARD HERE!!!");
                 
-            }
-        });
+//             }
+//         });
 
-        AddScoreToLeaderBoard();
-    }
+//         AddScoreToLeaderBoard();
+//     }
 
 
-    public void AddScoreToLeaderBoard()
-    {
-        Social.ReportScore((long) Mathf.Round(PlayerPrefs.GetFloat("Score")), LEADER_BOARD, (bool success) => {});
-    }
+//     public void AddScoreToLeaderBoard()
+//     {
+//         Social.ReportScore((long) Mathf.Round(PlayerPrefs.GetFloat("Score")), LEADER_BOARD, (bool success) => {});
+//     }
 
-    public void ShowLeaderBoardButton()
-    {
-        Social.ShowLeaderboardUI();
-    }
+//     public void ShowLeaderBoardButton()
+//     {
+//         Social.ShowLeaderboardUI();
+//     }
     
-}
+// }
