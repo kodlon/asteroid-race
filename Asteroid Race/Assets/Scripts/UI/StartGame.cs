@@ -6,7 +6,6 @@ public class StartGame : MonoBehaviour
 
     public void StartGameButton()
     {
-        
         menu.SetActive(false);
         BackgroundMoving.BackgroundActive = true;
         Player.GameActive = true;
