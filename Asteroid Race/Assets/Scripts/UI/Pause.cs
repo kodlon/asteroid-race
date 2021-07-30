@@ -14,6 +14,11 @@ public class Pause : MonoBehaviour
         get { return isPaused; }
     }
 
+    private void Start()
+    {
+        isPaused = false;
+    }
+
     public void OnPausePressed()
     {
         isPaused = !isPaused;
