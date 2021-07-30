@@ -4,7 +4,6 @@ public class BackgroundMoving : MonoBehaviour
 {
     [SerializeField] private GameObject dronePlayer;
     [SerializeField] private bl_Joystick joystick;
-    [SerializeField] private ChangeSettings joystickActive;
     [SerializeField] private GameObject backgroundMove;
     [SerializeField] private GameObject backgroundMoveNext;
 
@@ -17,7 +16,6 @@ public class BackgroundMoving : MonoBehaviour
     {
         set { backgroundActive = value; }
     }
-
 
     private void Update()
     {
@@ -47,9 +45,8 @@ public class BackgroundMoving : MonoBehaviour
     private void JetsParticleSpeed()
     {
         float verticalAxis = joystick.Vertical;
-        float verticalAxisAcceleration = Input.acceleration.y;
 
-        speedJetsParticleMove = joystickActive.Active ? ((verticalAxis - (-2.4f)) * 3) : ((verticalAxisAcceleration + 0.5f) * 20);
+        speedJetsParticleMove = ((verticalAxis - (-2.4f)) * 3);
 
         foreach (ParticleSystem jet in Jets)
         {
