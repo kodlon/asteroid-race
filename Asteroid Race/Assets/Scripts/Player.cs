@@ -19,7 +19,7 @@ public class Player : MonoBehaviour
 
     private const float SPEED = 1.0f;
     private const float SPEED_ACCELERATION = 10.0f;
-    private int health = 1;
+
     private static float score = 0.0f;
 
     public static float Score
@@ -37,12 +37,16 @@ public class Player : MonoBehaviour
         set { bonusActive = value; }
     }
 
-
     public static bool GameActive
     {
         get { return gameActive; }
         set { gameActive = value; }
     }
+
+    public int Health { get => health; set => health = value; }
+
+    private int health = 1;
+
     private void Update()
     {
         if (gameActive)
@@ -76,7 +80,7 @@ public class Player : MonoBehaviour
     {
         if (other.CompareTag("asteroid"))
         {
-            health--;
+            Health--;
             damageSound.Play();
 
             if (bonusActive)
@@ -87,13 +91,10 @@ public class Player : MonoBehaviour
             }
 
 
-            if (health == 0)
+            if (Health == 0)
             {
                 StartCoroutine(GameOver());
-
             }
-
-            Destroy(other);
         }
         else if (other.CompareTag("bonus"))
         {
@@ -107,11 +108,14 @@ public class Player : MonoBehaviour
                 IBonuses bonus = other.GetComponent<IBonuses>();
 
                 if (bonus != null)
-                    StartCoroutine(bonus.BonusCorutine(gunDrone, bonusPanel, transform));
-
-                Destroy(other.gameObject);
+                    StartCoroutine(bonus.BonusCorutine(this.gameObject,
+                                                       gunDrone,
+                                                       bonusPanel,
+                                                       playerSprite));
             }
         }
+
+        Destroy(other.gameObject);
     }
 
     private void ScoreChanging()
@@ -131,13 +135,13 @@ public class Player : MonoBehaviour
         transform.localScale = Vector3.one;
         bonusPanel.SetInteger("ChangeAnim", 0);
 
-        //yield return StartCoroutine(BlackScreen());
+        yield return StartCoroutine(BlackScreen());
 
-        Ads.ADS();
+        //Ads.ADS();
         SceneManager.LoadScene("Main");
 
 
-        yield return null;
+        yield break;
     }
 
     private IEnumerator BlackScreen()
