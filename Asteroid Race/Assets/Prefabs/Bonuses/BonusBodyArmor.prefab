@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 2248614029344298046}
   - component: {fileID: 6024407116252965937}
   - component: {fileID: 2248614029344298040}
-  - component: {fileID: 6903926611404084515}
+  - component: {fileID: -6227287763000834830}
   m_Layer: 0
-  m_Name: BonusBodySize
+  m_Name: BonusBodyArmor
   m_TagString: bonus
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -27,7 +27,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2248614029344298042}
-  m_LocalRotation: {x: 0, y: 0, z: -0.39073068, w: -0.92050505}
+  m_LocalRotation: {x: 0, y: 0, z: -0.93358016, w: -0.35836878}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 3.5, y: 3.5, z: 1}
   m_Children: []
@@ -132,7 +132,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &6903926611404084515
+--- !u!114 &-6227287763000834830
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -141,6 +141,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 2248614029344298042}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f66331b099e0274081867fa233d20d2, type: 3}
+  m_Script: {fileID: 11500000, guid: 8f0fd1e541834cf4e999e256d17273f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

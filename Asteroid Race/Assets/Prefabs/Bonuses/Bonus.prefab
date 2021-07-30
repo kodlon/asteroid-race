@@ -46,9 +46,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   alert: {fileID: 2433420270598903931}
   item:
+  - {fileID: 2248614029344298042, guid: 8cfac6a2dd53ca244b623f712f7a42e5, type: 3}
   - {fileID: 2248614029344298042, guid: 7cdec14719bf4f941a4b92fe4e37fb46, type: 3}
   - {fileID: 2248614029344298042, guid: bc777301cef63a44cb1fcda3349bdcec, type: 3}
-  - {fileID: 2248614029344298042, guid: 8cfac6a2dd53ca244b623f712f7a42e5, type: 3}
+  - {fileID: 2248614029344298042, guid: 14f798a2b171e304daaf8753c97d804a, type: 3}
 --- !u!1 &2433420270598903929
 GameObject:
   m_ObjectHideFlags: 0
