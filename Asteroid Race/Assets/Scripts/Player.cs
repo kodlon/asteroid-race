@@ -1,8 +1,8 @@
+using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using TMPro;
-using System.Collections;
 
 public class Player : MonoBehaviour
 {
@@ -12,16 +12,14 @@ public class Player : MonoBehaviour
     [SerializeField] private Image blackScreen;
     [SerializeField] private SpriteRenderer gunDrone;
     [SerializeField] private Animator bonusPanel;
-    [SerializeField] private ChangeSettings joystickActive;
 
     [SerializeField] private AudioSource engineSound;
     [SerializeField] private AudioSource damageSound;
     [SerializeField] private AudioSource bonusSound;
 
-
     private const float SPEED = 1.0f;
     private const float SPEED_ACCELERATION = 10.0f;
-    private int health = 1;
+
     private static float score = 0.0f;
 
     public static float Score
@@ -39,12 +37,16 @@ public class Player : MonoBehaviour
         set { bonusActive = value; }
     }
 
-
     public static bool GameActive
     {
         get { return gameActive; }
         set { gameActive = value; }
     }
+
+    public int Health { get => health; set => health = value; }
+
+    private int health = 1;
+
     private void Update()
     {
         if (gameActive)
@@ -54,22 +56,11 @@ public class Player : MonoBehaviour
             engineSound.volume = 1;
             engineSound.pitch = (verticalAxis / 10) + 1;
 
-            if (joystickActive.Active)
-            {
-                MoveJoystick();
-                joystick.gameObject.SetActive(true);
-            }
-            else
-            {
-                MoveAcceleration();
-                joystick.gameObject.SetActive(false);
-            }
+            MoveJoystick();
 
             //Position limit
             transform.position = new Vector3(Mathf.Clamp(transform.position.x, -2.2f, 2.2f),
                                             Mathf.Clamp(transform.position.y, -2.4f, 3.7f), 0);
-
-
             if (!Pause.IsPaused)
                 ScoreChanging();
         }
@@ -85,22 +76,11 @@ public class Player : MonoBehaviour
         transform.Translate(translate);
     }
 
-
-    private void MoveAcceleration()
-    {
-        float horizontalAxis = Input.acceleration.x;
-        float verticalAxis = Input.acceleration.y;
-
-        Vector3 translate = (new Vector3(horizontalAxis, verticalAxis, 0) * Time.deltaTime) * SPEED_ACCELERATION;
-        transform.Translate(translate);
-    }
-
-
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.tag == "asteroid")
+        if (other.CompareTag("asteroid"))
         {
-            health--;
+            Health--;
             damageSound.Play();
 
             if (bonusActive)
@@ -111,50 +91,31 @@ public class Player : MonoBehaviour
             }
 
 
-            if (health == 0)
+            if (Health == 0)
             {
                 StartCoroutine(GameOver());
-
             }
-
-            Destroy(other.transform.parent.gameObject);
         }
-        else if (other.tag == "bonus")
+        else if (other.CompareTag("bonus"))
         {
             StopAllCoroutines();
 
-
             if (!bonusActive)
             {
-                int powerOfBonus = UnityEngine.Random.Range(0, 4);
-
                 bonusSound.Play();
                 bonusActive = true;
-                switch (powerOfBonus)
-                {
-                    case 0:
-                        health++;
-                        playerSprite.color = new Color(1f, 0.1686275f, 0.1686275f, 1.0f);
-                        bonusPanel.SetInteger("ChangeAnim", 1);
-                        break;
-                    case 1:
-                        StartCoroutine(PlayerBonuses.GunBonusCoroutine(gunDrone, bonusPanel));
-                        bonusPanel.SetInteger("ChangeAnim", 2);
-                        break;
-                    case 2:
-                        StartCoroutine(PlayerBonuses.TimeBonusCoroutine(bonusPanel));
-                        bonusPanel.SetInteger("ChangeAnim", 3);
-                        break;
-                    case 3:
-                        bonusPanel.SetInteger("ChangeAnim", 4);
-                        StartCoroutine(PlayerBonuses.SizeBonusCoroutine(bonusPanel, transform));
-                        break;
-                }
 
-                Destroy(other.gameObject);
+                IBonuses bonus = other.GetComponent<IBonuses>();
 
+                if (bonus != null)
+                    StartCoroutine(bonus.BonusCorutine(this.gameObject,
+                                                       gunDrone,
+                                                       bonusPanel,
+                                                       playerSprite));
             }
         }
+
+        Destroy(other.gameObject);
     }
 
     private void ScoreChanging()
@@ -162,7 +123,6 @@ public class Player : MonoBehaviour
         score += (transform.position.y - (-3.0f)) - ((transform.position.y - (-3.0f)) / 1.5f);
         scoreText.text = Mathf.Round(score).ToString() + " km";
     }
-
 
     private IEnumerator GameOver()
     {
@@ -175,13 +135,13 @@ public class Player : MonoBehaviour
         transform.localScale = Vector3.one;
         bonusPanel.SetInteger("ChangeAnim", 0);
 
-        //yield return StartCoroutine(BlackScreen());
+        yield return StartCoroutine(BlackScreen());
 
-        Ads.ADS();
+        //Ads.ADS();
         SceneManager.LoadScene("Main");
 
 
-        yield return null;
+        yield break;
     }
 
     private IEnumerator BlackScreen()

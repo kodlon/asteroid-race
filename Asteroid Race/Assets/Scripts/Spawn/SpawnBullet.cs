@@ -23,7 +23,7 @@ public class SpawnBullet : MonoBehaviour
             Spawn();
     }
 
-
+    //TODO: Destroy bullets
     private void Spawn()
     {
         if (timer >= 1.0f)
