@@ -1,9 +1,11 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 interface IBonuses
 {
-    public IEnumerator BonusCorutine(SpriteRenderer gunDrone,
+    public IEnumerator BonusCorutine(GameObject playerObject,
+                                     SpriteRenderer gunDrone,
                                      Animator bonusPanel,
-                                     Transform playerTransform);
+                                     SpriteRenderer playerSprite);
 }

@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class TimeBonus : MonoBehaviour, IBonuses
 {
-    public IEnumerator BonusCorutine(SpriteRenderer gunDrone, Animator bonusPanel, Transform playerTransform)
+    public IEnumerator BonusCorutine(GameObject playerObject, SpriteRenderer gunDrone, Animator bonusPanel, SpriteRenderer playerSprite)
     {
         bonusPanel.SetInteger("ChangeAnim", 3);
 
@@ -18,5 +18,7 @@ public class TimeBonus : MonoBehaviour, IBonuses
         Time.timeScale = 1.0f;
         Player.BonusActive = false;
         bonusPanel.SetInteger("ChangeAnim", 0);
+
+        yield break;
     }
 }

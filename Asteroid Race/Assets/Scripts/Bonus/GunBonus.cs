@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GunBonus : MonoBehaviour, IBonuses
 {
-    public IEnumerator BonusCorutine(SpriteRenderer gunDrone, Animator bonusPanel, Transform playerTransform)
+    public IEnumerator BonusCorutine(GameObject playerObject, SpriteRenderer gunDrone, Animator bonusPanel, SpriteRenderer playerSprite)
     {
         bonusPanel.SetInteger("ChangeAnim", 2);
         SpawnBullet.Active = true;
@@ -18,5 +18,7 @@ public class GunBonus : MonoBehaviour, IBonuses
         SpawnBullet.Active = false;
         bonusPanel.SetInteger("ChangeAnim", 0);
         Player.BonusActive = false;
+
+        yield break;
     }
 }
